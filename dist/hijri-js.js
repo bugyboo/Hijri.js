@@ -1,4 +1,15 @@
-const ummalqura_dat = [28607,28636,28665,28695,28724,28754,28783,28813,28843,28872,28901,28931,28960,28990,29019,29049,29078,29108,29137,29167,
+/*!
+ * hijri-js v1.0.0
+ * (c) 2017 Yasser Harbi
+ * @license MIT
+ */
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.HijriJs = factory());
+}(this, (function () { 'use strict';
+
+var ummalqura_dat$1 = [28607,28636,28665,28695,28724,28754,28783,28813,28843,28872,28901,28931,28960,28990,29019,29049,29078,29108,29137,29167,
   29196,29226,29255,29285,29315,29345,29375,29404,29434,29463,29492,29522,29551,29580,29610,29640,29669,29699,29729,29759,
   29788,29818,29847,29876,29906,29935,29964,29994,30023,30053,30082,30112,30141,30171,30200,30230,30259,30289,30318,30348,
   30378,30408,30437,30467,30496,30526,30555,30585,30614,30644,30673,30703,30732,30762,30791,30821,30850,30880,30909,30939,
@@ -87,8 +98,251 @@ const ummalqura_dat = [28607,28636,28665,28695,28724,28754,28783,28813,28843,288
   79399,79428,79458,79487,79517,79546,79576,79606,79635,79665,79695,79724,79753,79783,79812,79841,79871,79900,79930,79960,
   79990];
 
-export default class Ummalqura {
-  constructor() {
-    this.ummalqura_dat = ummalqura_dat;
+var Ummalqura = function Ummalqura() {
+  this.ummalqura_dat = ummalqura_dat$1;
+};
+
+var Lang = function Lang() {
+  this.prefix = 'en';
+  this.notation = 'H';
+  this.zero = '0';
+  this.one = '1';
+  this.two = '2';
+  this.three = '3';
+  this.four = '4';
+  this.five = '5';
+  this.six = '6';
+  this.seven = '7';
+  this.eight = '8';
+  this.nine = '9';
+  this.monthNames = [
+    'Muharram',
+    'Safar',
+    "Rabi' al-awwal",
+    "Rabi' al-thani",
+    'Jumada al-awwal',
+    'Jumada al-thani',
+    'Rajab',
+    "Sha'aban",
+    'Ramadan',
+    'Shawwal',
+    "Dhu al-Qi'dah",
+    'Dhu al-Hijjah' ];
+  this.monthShortNames = [
+    'Muh',
+    'Saf',
+    'Rab1',
+    'Rab2',
+    'Jum1',
+    'Jum2',
+    'Raj',
+    "Sha'",
+    'Ram',
+    'Shaw',
+    'DhuQ',
+    'DhuH' ];
+};
+
+Lang.prototype.formatLocale = function formatLocale (hDate) {
+  // For English it will convert from currentLanguages numbers to Arabic numbers.
+
+  return hDate;
+};
+
+var lang = new Lang();
+var ummalqura = new Ummalqura();
+var ummalqura_dat = ummalqura.ummalqura_dat;
+
+var HijriJs = function HijriJs() {
+  this.lang = lang;
+  //console.log('Insideer ummalqura_dat ==> ' + ummalqura_dat.toString());
+};
+
+HijriJs.prototype.toGregorian = function toGregorian (dateString, splitter) {
+  if (!splitter) {
+    splitter = '/';
   }
-}
+  // default splitter
+  var arrDate = dateString.split(splitter);
+  if (arrDate.length >= 3)
+    { return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0]); }
+}; 
+
+HijriJs.prototype.hijriToGregorian = function hijriToGregorian (year, month, day) {
+  var year = parseInt(year);
+  var month = parseInt(month);
+  var day = parseInt(day);
+  
+  console.log('insider h to g 1 ==> ', year, month, day);
+  
+  if (year === 'NaN' || month === 'NaN' || day === 'NaN') {
+    return 'Error Input';
+  }
+  
+  var iy = year;
+  var im = month;
+  var id = day;
+  var ii = iy - 1;
+  var iln = ii * 12 + 1 + (im - 1);
+  var i = iln - 16260;
+  var mcjdn = id + ummalqura_dat[i - 1] - 1;
+  var cjdn = mcjdn + 2400000;
+  console.log('insider h to g ==> ', cjdn);
+  return this.julianToGregorian(cjdn);
+};
+  
+HijriJs.prototype.toHijri = function toHijri (dateString, splitter) {
+  if (!splitter) {
+    splitter = '/';
+  }
+  // default splitter
+  var arrDate = dateString.split(splitter);
+  if (arrDate.length >= 3) {
+    return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0]);
+  }
+};
+
+HijriJs.prototype.gregorianToHijri = function gregorianToHijri (pYear, pMonth, pDay) {
+  //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
+  // read calendar data
+
+  var day = parseInt(pDay);
+  var month = parseInt(pMonth) - 1; // Here we enter the Index of the month (which starts with Zero)
+  var year = parseInt(pYear);
+
+  console.log('insider G to H ==> ', day, month, year);
+
+  var m = month + 1;
+  var y = year;
+
+  // append January and February to the previous year (i.e. regard March as
+  // the first month of the year in order to simplify leapday corrections)
+
+  if (m < 3) {
+    y -= 1;
+    m += 12;
+  }
+
+  // determine offset between Julian and Gregorian calendar
+
+  var a = Math.floor(y / 100);
+  var jgc = a - Math.floor(a / 4) - 2;
+
+  // compute Chronological Julian Day Number (CJDN)
+
+  var cjdn =
+    Math.floor(365.25 * (y + 4716)) +
+    Math.floor(30.6001 * (m + 1)) +
+    day -
+    jgc -
+    1524;
+
+  a = Math.floor((cjdn - 1867216.25) / 36524.25);
+  jgc = a - Math.floor(a / 4) + 1;
+  var b = cjdn + jgc + 1524;
+  var c = Math.floor((b - 122.1) / 365.25);
+  var d = Math.floor(365.25 * c);
+  month = Math.floor((b - d) / 30.6001);
+  day = b - d - Math.floor(30.6001 * month);
+
+  if (month > 13) {
+    c += 1;
+    month -= 12;
+  }
+
+  month -= 1;
+  year = c - 4716;
+
+  // compute Modified Chronological Julian Day Number (MCJDN)
+
+  var mcjdn = cjdn - 2400000;
+
+  // the MCJDN's of the start of the lunations in the Umm al-Qura calendar are stored in 'islamcalendar_dat.js'
+
+  for (var i = 0; i < ummalqura_dat.length; i++) {
+    if (ummalqura_dat[i] > mcjdn) { break; }
+  }
+
+  // compute and output the Umm al-Qura calendar date
+
+  var iln = i + 16260;
+  var ii = Math.floor((iln - 1) / 12);
+  var iy = ii + 1;
+  var im = iln - 12 * ii;
+  var id = mcjdn - ummalqura_dat[i - 1] + 1;
+  return new this.HDate(iy, im, id);
+};
+
+HijriJs.prototype.julianToGregorian = function julianToGregorian (julianDate) {
+  //source from: http://keith-wood.name/calendars.html
+  console.log('insider j to g ==> ', julianDate);
+  var z = Math.floor(julianDate + 0.5);
+  var a = Math.floor((z - 1867216.25) / 36524.25);
+  a = z + 1 + a - Math.floor(a / 4);
+  var b = a + 1524;
+  var c = Math.floor((b - 122.1) / 365.25);
+  var d = Math.floor(365.25 * c);
+  var e = Math.floor((b - d) / 30.6001);
+  var day = b - d - Math.floor(e * 30.6001);
+  var month = e - (e > 13.5 ? 13 : 1);
+  var year = c - (month > 2.5 ? 4716 : 4715);
+  console.log('insider j to g ==> ', year, month, day);    
+  if (year <= 0) {
+    year--;
+  } // No year zero
+  return new Date(year + '/' + (month + 1) + '/' + day);
+};
+
+HijriJs.prototype.HDate = function HDate (year, month, day) {
+  this.year = year;
+  this.month = month;
+  this.day = day;
+  this.toString = function toString() {
+    return this.format(this.year, this.month, this.day, 'dd/mm/yyyyN');
+  };
+  this.toFormat = function toFormat(format) {
+    return this.format(this.year, this.month, this.day, format);
+  };
+  this.format = function useFormat(year, month, day, format) {
+    if (this.validateHijri(year, month, day)) {
+      var newFormat = format;
+
+      if (newFormat.indexOf('dd') !== -1)
+        { newFormat = newFormat.replace('dd', day < '10' ? '0' + day : day); }
+      else { newFormat = newFormat.replace('d', day); }
+
+      if (newFormat.indexOf('mm') !== -1)
+        { newFormat = newFormat.replace(
+          'mm',
+          month < '10' ? '0' + month : month
+        ); }
+      else { newFormat = newFormat.replace('m', month); }
+
+      if (newFormat.indexOf('yyyy') !== -1)
+        { newFormat = newFormat.replace('yyyy', year); }
+      else
+        { newFormat = newFormat.replace('yy', year.substr(year.length - 2, 2)); }
+
+      newFormat = newFormat.replace('N', this.lang.notation);
+      return this.lang.formatLocale(newFormat);
+    }
+  };
+};
+
+HijriJs.prototype.validateHijri = function validateHijri (year, month, day) {
+  if (month < 1 || month > 12) { return false; }
+
+  if (day < 1 || day > 30) { return false; }
+  return true;
+};
+
+HijriJs.prototype.validateGregorian = function validateGregorian (year, month, day) {
+  if (month < 1 || month > 12) { return false; }
+
+  if (day < 1 || day > 31) { return false; }
+  return true;
+};
+
+return HijriJs;
+
+})));

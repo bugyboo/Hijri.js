@@ -1,15 +1,16 @@
 declare class HijriJs {
-    constructor(element: string | HTMLElement);
 
-    today();
+    constructor(lang: Lang);
 
-    toGregorian(dateString: string, splitter: string);
+    today(): string;
 
-    toHijri(dateString: string, splitter: string);
+    toGregorian(dateString: string, splitter: string): void;
 
-    validateHijri(year: string, month:string, day: string);  
+    toHijri(dateString: string, splitter: string): void;
+
+    validateHijri(year: string, month:string, day: string): boolean;  
     
-    validateGregorian(year: string, month: string, day: string);    
+    validateGregorian(year: string, month: string, day: string): boolean;    
 }
 
 export default HijriJs;

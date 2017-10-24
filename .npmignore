@@ -1,0 +1,12 @@
+*.log
+*.tgz
+*.lock
+
+src/
+package/
+node_modules/
+
+tslint.json
+stylelint.json
+
+build.js 
