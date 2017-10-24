@@ -59,6 +59,7 @@ function buildEntry(opts) {
   return rollup
     .rollup({
       input: entry,
+      sourcemap: JSON.debug,
       plugins: [buble()],
     })
     .then(bundle => bundle.generate({

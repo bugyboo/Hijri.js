@@ -23,8 +23,9 @@ export default class HijriJs {
     }
 
     toGregorian(dateString, splitter) {
-		if (!splitter)
+		if (!splitter) {
 			splitter = '/';
+		}
 		// default splitter
 		const arrDate = dateString.split(splitter);
 		if (arrDate.length >= 3)
@@ -32,12 +33,14 @@ export default class HijriJs {
     }
     
 	toHijri(dateString, splitter) {
-		if (!splitter)
+		if (!splitter) {
 			splitter = '/';
+		}
 		// default splitter
 		const arrDate = dateString.split(splitter);
-		if (arrDate.length >= 3)
+		if (arrDate.length >= 3) {
 			return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0]);
+		}
     }
     
     hijriToGregorian(year, month, day) {
