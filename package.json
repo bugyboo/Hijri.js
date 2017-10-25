@@ -1,10 +1,10 @@
 {
   "name": "hijri-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node.js Wrapper lib for @xsoh Hijri.js utility ",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xsoh/Hijri.js.git"
+    "url": "git+https://github.com/bugyboo/Hijri-js.git"
   },
   "keywords": [
     "hijri",
@@ -41,5 +41,6 @@
     "format:lint": "prettier -l --single-quote --trailing-comma es5 'src/**/*.js'",
     "release": "./release"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }
