@@ -37,7 +37,7 @@ function run() {
     
     console.log(' today ==> ', x.today().full )
     console.log(' 24-10-2017 ==> ', x.toHijri('24102017') );
-	console.log(' 24-10-2017 ==> ', x.toHijri('24/10/2017', '/') );
+    console.log(' 24-10-2017 ==> ', x.toHijri('24/10/2017', '/') );
     console.log(' 11-07-1386 ==> ', x.toGregorian('11-7-1386', '-') );    
 }
 
