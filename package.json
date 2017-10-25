@@ -1,6 +1,6 @@
 {
   "name": "hijri-js",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "description": "Node.js Wrapper lib for @xsoh Hijri.js utility ",
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/xsoh/Hijri.js#readme",
   "main": "dist/hijri-js.common.js",
   "module": "dist/hijri-js.esm.js",
+  "types": "types/index.d.ts",
   "typings": "types/hijri-js.d.ts",
   "files": [
     "css",
