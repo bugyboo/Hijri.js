@@ -1,16 +1,26 @@
+
+export interface HijriDate{
+    year: string;
+    month: string;
+    day: string;
+    splitter: string;
+    full: string;
+}
+
 declare class HijriJs {
 
-    constructor(lang: Lang);
+    constructor();
 
-    today(): string;
+    today(): HijriDate;
 
-    toGregorian(dateString: string, splitter: string): void;
+    toGregorian(dateString: string, splitter: string): Date;
 
-    toHijri(dateString: string, splitter: string): void;
+    toHijri(dateString: string, splitter: string): HijriDate;
 
-    validateHijri(year: string, month:string, day: string): boolean;  
-    
-    validateGregorian(year: string, month: string, day: string): boolean;    
+    hijriToGregorian(year: string, month: string, day: string, splitter?: string): Date;
+
+    gregorianToHijri(pYear: string, pMonth: string, pDay: string, splitter?: string): HijriDate;
+ 
 }
 
 export default HijriJs;

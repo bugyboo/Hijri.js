@@ -149,28 +149,42 @@ var ummalqura_dat = ummalqura.ummalqura_dat;
 
 var HijriJs = function HijriJs() {
   this.lang = lang;
-  //console.log('Insideer ummalqura_dat ==> ' + ummalqura_dat.toString());
 };
 
+HijriJs.prototype.today = function today () {
+  var today = new Date();
+		return this.gregorianToHijri(today.getFullYear(), (today.getMonth()+1), today.getDate(), '/');
+	};
+
 HijriJs.prototype.toGregorian = function toGregorian (dateString, splitter) {
+  var arrDate;
+  if (!splitter) {
+    var year = dateString.substring(4,8);
+    var month = dateString.substring(2,4);
+    var day = dateString.substring(0,2);
+    arrDate = [day, month, year];
+    splitter = '/';
+  }else{
+  // default splitter
+    arrDate = dateString.split(splitter);
+  }
+  if (arrDate.length < 3) {
+    throw new 'Error in input values';
+  }
+  return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0], splitter);
+}; 
+
+HijriJs.prototype.hijriToGregorian = function hijriToGregorian (year, month, day, splitter) {
   if (!splitter) {
     splitter = '/';
   }
-  // default splitter
-  var arrDate = dateString.split(splitter);
-  if (arrDate.length >= 3)
-    { return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0]); }
-}; 
 
-HijriJs.prototype.hijriToGregorian = function hijriToGregorian (year, month, day) {
   var year = parseInt(year);
   var month = parseInt(month);
   var day = parseInt(day);
   
-  console.log('insider h to g 1 ==> ', year, month, day);
-  
   if (year === 'NaN' || month === 'NaN' || day === 'NaN') {
-    return 'Error Input';
+     throw new 'Error in input values';
   }
   
   var iy = year;
@@ -181,30 +195,41 @@ HijriJs.prototype.hijriToGregorian = function hijriToGregorian (year, month, day
   var i = iln - 16260;
   var mcjdn = id + ummalqura_dat[i - 1] - 1;
   var cjdn = mcjdn + 2400000;
-  console.log('insider h to g ==> ', cjdn);
-  return this.julianToGregorian(cjdn);
+    
+  return this.julianToGregorian(cjdn, splitter);
 };
   
 HijriJs.prototype.toHijri = function toHijri (dateString, splitter) {
+  var arrDate;
   if (!splitter) {
+    var year = dateString.substring(4,8);
+    var month = dateString.substring(2,4);
+    var day = dateString.substring(0,2);
+    arrDate = [day, month, year];
     splitter = '/';
-  }
+  }else{
   // default splitter
-  var arrDate = dateString.split(splitter);
-  if (arrDate.length >= 3) {
-    return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0]);
+    arrDate = dateString.split(splitter);
   }
+
+  if (arrDate.length < 3) {
+    throw new 'Error in input values';
+  }
+  return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0], splitter);
+
 };
 
-HijriJs.prototype.gregorianToHijri = function gregorianToHijri (pYear, pMonth, pDay) {
+HijriJs.prototype.gregorianToHijri = function gregorianToHijri (pYear, pMonth, pDay, splitter) {
+  if (!splitter) {
+    splitter = '/';
+  }    
+
   //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
   // read calendar data
 
   var day = parseInt(pDay);
   var month = parseInt(pMonth) - 1; // Here we enter the Index of the month (which starts with Zero)
   var year = parseInt(pYear);
-
-  console.log('insider G to H ==> ', day, month, year);
 
   var m = month + 1;
   var y = year;
@@ -264,12 +289,12 @@ HijriJs.prototype.gregorianToHijri = function gregorianToHijri (pYear, pMonth, p
   var iy = ii + 1;
   var im = iln - 12 * ii;
   var id = mcjdn - ummalqura_dat[i - 1] + 1;
-  return new this.HDate(iy, im, id);
+  return new this.HijriDate(iy, im, id, splitter);
 };
 
-HijriJs.prototype.julianToGregorian = function julianToGregorian (julianDate) {
-  //source from: http://keith-wood.name/calendars.html
-  console.log('insider j to g ==> ', julianDate);
+HijriJs.prototype.julianToGregorian = function julianToGregorian (julianDate, splitter) {
+  // source from: http://keith-wood.name/calendars.html
+
   var z = Math.floor(julianDate + 0.5);
   var a = Math.floor((z - 1867216.25) / 36524.25);
   a = z + 1 + a - Math.floor(a / 4);
@@ -280,61 +305,20 @@ HijriJs.prototype.julianToGregorian = function julianToGregorian (julianDate) {
   var day = b - d - Math.floor(e * 30.6001);
   var month = e - (e > 13.5 ? 13 : 1);
   var year = c - (month > 2.5 ? 4716 : 4715);
-  console.log('insider j to g ==> ', year, month, day);    
+
   if (year <= 0) {
     year--;
   } // No year zero
-  return new Date(year + '/' + (month + 1) + '/' + day);
+
+  return new Date(year + splitter + month + splitter + day);
 };
 
-HijriJs.prototype.HDate = function HDate (year, month, day) {
+HijriJs.prototype.HijriDate = function HijriDate (year, month, day, splitter) {
   this.year = year;
   this.month = month;
   this.day = day;
-  this.toString = function toString() {
-    return this.format(this.year, this.month, this.day, 'dd/mm/yyyyN');
-  };
-  this.toFormat = function toFormat(format) {
-    return this.format(this.year, this.month, this.day, format);
-  };
-  this.format = function useFormat(year, month, day, format) {
-    if (this.validateHijri(year, month, day)) {
-      var newFormat = format;
-
-      if (newFormat.indexOf('dd') !== -1)
-        { newFormat = newFormat.replace('dd', day < '10' ? '0' + day : day); }
-      else { newFormat = newFormat.replace('d', day); }
-
-      if (newFormat.indexOf('mm') !== -1)
-        { newFormat = newFormat.replace(
-          'mm',
-          month < '10' ? '0' + month : month
-        ); }
-      else { newFormat = newFormat.replace('m', month); }
-
-      if (newFormat.indexOf('yyyy') !== -1)
-        { newFormat = newFormat.replace('yyyy', year); }
-      else
-        { newFormat = newFormat.replace('yy', year.substr(year.length - 2, 2)); }
-
-      newFormat = newFormat.replace('N', this.lang.notation);
-      return this.lang.formatLocale(newFormat);
-    }
-  };
-};
-
-HijriJs.prototype.validateHijri = function validateHijri (year, month, day) {
-  if (month < 1 || month > 12) { return false; }
-
-  if (day < 1 || day > 30) { return false; }
-  return true;
-};
-
-HijriJs.prototype.validateGregorian = function validateGregorian (year, month, day) {
-  if (month < 1 || month > 12) { return false; }
-
-  if (day < 1 || day > 31) { return false; }
-  return true;
+  this.splitter = splitter;
+  this.full = (day + splitter + month + splitter + year);
 };
 
 export default HijriJs;

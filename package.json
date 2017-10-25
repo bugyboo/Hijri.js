@@ -23,7 +23,7 @@
     "dist",
     "src",
     "types"
-  ],  
+  ],
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
     "prettier": "^1.7.0",
@@ -41,5 +41,5 @@
     "format:lint": "prettier -l --single-quote --trailing-comma es5 'src/**/*.js'",
     "release": "./release"
   },
-  "license": "MIT"  
+  "license": "MIT"
 }

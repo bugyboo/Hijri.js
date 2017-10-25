@@ -1,3 +1,7 @@
+# hijri-js
+[GitHub Pages](https://github.com/xsoh) for Nodejs
+[![npm](https://img.shields.io/npm/v/perfect-scrollbar.svg)](https://www.npmjs.com/package/hijri-js)
+
 Hijri.js
 ========
 

@@ -5,6 +5,7 @@
 src/
 package/
 node_modules/
+tests/
 
 tslint.json
 stylelint.json
