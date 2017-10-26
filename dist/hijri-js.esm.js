@@ -1,5 +1,5 @@
 /*!
- * hijri-js v1.0.10
+ * hijri-js v1.0.12
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
@@ -321,7 +321,9 @@ HijriJs.prototype.hijriDate = function hijriDate (year, month, day, splitter, la
   this.splitter = splitter;
   this.monthName = lang.monthNames[month];
   this.monthShortName = lang.monthShortNames[month];
-  this.full = (day + ' - ' + this.monthName + '(' + month + ') - ' + year);
+  this.full = (day + ' - ' + this.monthName 
+              + '(' + month + ') - ' 
+              + year + ' ' + lang.notation);
   this.plain = (day + splitter + month + splitter + year);
 };
 

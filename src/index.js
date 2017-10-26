@@ -188,7 +188,9 @@ export default class HijriJs {
     this.splitter = splitter;
     this.monthName = lang.monthNames[month];
     this.monthShortName = lang.monthShortNames[month];
-    this.full = (day + ' - ' + this.monthName + '(' + month + ') - ' + year);
+    this.full = (day + ' - ' + this.monthName 
+                + '(' + month + ') - ' 
+                + year + ' ' + lang.notation);
     this.plain = (day + splitter + month + splitter + year);
   }
 }
