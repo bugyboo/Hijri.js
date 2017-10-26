@@ -1,11 +1,9 @@
 /*!
- * hijri-js v1.0.9
+ * hijri-js v1.0.10
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
 'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
 
 var ummalqura_dat$1 = [28607,28636,28665,28695,28724,28754,28783,28813,28843,28872,28901,28931,28960,28990,29019,29049,29078,29108,29137,29167,
   29196,29226,29255,29285,29315,29345,29375,29404,29434,29463,29492,29522,29551,29580,29610,29640,29669,29699,29729,29759,
@@ -141,202 +139,192 @@ var Lang = function Lang() {
     'DhuH' ];
 };
 
-var lang = new Lang();
 var ummalqura = new Ummalqura();
 var ummalqura_dat = ummalqura.ummalqura_dat;
 
-var LangFormat = function LangFormat() {
-  this.prefix = 'en';
+var HijriJs = function HijriJs() {
+  this.lang = new Lang();
 };
 
-var index = (function () {
-  function anonymous() {
-    this.lang = lang;
-  }
+HijriJs.prototype.getLang = function getLang () {
+  return this.lang;
+};
 
-  anonymous.prototype.getLang = function getLang () {
-    return this.lang;
-  };
+HijriJs.prototype.setLang = function setLang (value) {
+  this.lang = value;
+};
 
-  anonymous.prototype.setLang = function setLang (value) {
-    this.lang = lang;
-  };
-
-  anonymous.prototype.today = function today () {
-    var today = new Date();
+HijriJs.prototype.today = function today () {
+  var today = new Date();
 		return this.gregorianToHijri(today.getFullYear(), (today.getMonth()+1), today.getDate(), '/');
 	};
 
-  anonymous.prototype.toGregorian = function toGregorian (dateString, splitter) {
-    var arrDate;
-    if (!splitter) {
-      var year = dateString.substring(4,8);
-      var month = dateString.substring(2,4);
-      var day = dateString.substring(0,2);
-      arrDate = [day, month, year];
-      splitter = '/';
-    }else{
-    // default splitter
-      arrDate = dateString.split(splitter);
-    }
-    if (arrDate.length < 3) {
-      throw new 'Error in input values';
-    }
-    return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0], splitter);
-  }; 
+HijriJs.prototype.toGregorian = function toGregorian (dateString, splitter) {
+  var arrDate;
+  if (!splitter) {
+    var year = dateString.substring(4,8);
+    var month = dateString.substring(2,4);
+    var day = dateString.substring(0,2);
+    arrDate = [day, month, year];
+    splitter = '/';
+  } else {
+  // default splitter
+    arrDate = dateString.split(splitter);
+  }
+  if (arrDate.length < 3) {
+    throw new 'Error in input values';
+  }
+  return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0], splitter);
+}; 
 
-  anonymous.prototype.hijriToGregorian = function hijriToGregorian (year, month, day, splitter) {
-    if (!splitter) {
-      splitter = '/';
-    }
+HijriJs.prototype.hijriToGregorian = function hijriToGregorian (year, month, day, splitter) {
+  if (!splitter) {
+    splitter = '/';
+  }
 
-    var year = parseInt(year);
-    var month = parseInt(month);
-    var day = parseInt(day);
+  var year = parseInt(year);
+  var month = parseInt(month);
+  var day = parseInt(day);
   
-    if (year === 'NaN' || month === 'NaN' || day === 'NaN') {
-       throw new 'Error in input values';
-    }
+  if (year === 'NaN' || month === 'NaN' || day === 'NaN') {
+     throw new 'Error in input values';
+  }
   
-    var iy = year;
-    var im = month;
-    var id = day;
-    var ii = iy - 1;
-    var iln = ii * 12 + 1 + (im - 1);
-    var i = iln - 16260;
-    var mcjdn = id + ummalqura_dat[i - 1] - 1;
-    var cjdn = mcjdn + 2400000;
+  var iy = year;
+  var im = month;
+  var id = day;
+  var ii = iy - 1;
+  var iln = ii * 12 + 1 + (im - 1);
+  var i = iln - 16260;
+  var mcjdn = id + ummalqura_dat[i - 1] - 1;
+  var cjdn = mcjdn + 2400000;
     
-    return this.julianToGregorian(cjdn, splitter);
-  };
+  return this.julianToGregorian(cjdn, splitter);
+};
   
-  anonymous.prototype.toHijri = function toHijri (dateString, splitter) {
-    var arrDate;
-    if (!splitter) {
-      var year = dateString.substring(4,8);
-      var month = dateString.substring(2,4);
-      var day = dateString.substring(0,2);
-      arrDate = [day, month, year];
-      splitter = '/';
-    }else{
-    // default splitter
-      arrDate = dateString.split(splitter);
-    }
+HijriJs.prototype.toHijri = function toHijri (dateString, splitter) {
+  var arrDate;
+  if (!splitter) {
+    var year = dateString.substring(4,8);
+    var month = dateString.substring(2,4);
+    var day = dateString.substring(0,2);
+    arrDate = [day, month, year];
+    splitter = '/';
+  }else{
+  // default splitter
+    arrDate = dateString.split(splitter);
+  }
 
-    if (arrDate.length < 3) {
-      throw new 'Error in input values';
-    }
-    return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0], splitter);
+  if (arrDate.length < 3) {
+    throw new 'Error in input values';
+  }
+  return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0], splitter);
 
-  };
+};
 
-  anonymous.prototype.gregorianToHijri = function gregorianToHijri (pYear, pMonth, pDay, splitter) {
-    if (!splitter) {
-      splitter = '/';
-    }    
+HijriJs.prototype.gregorianToHijri = function gregorianToHijri (pYear, pMonth, pDay, splitter) {
+  if (!splitter) {
+    splitter = '/';
+  }    
 
-    //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
-    // read calendar data
+  //This code the modified version of R.H. van Gent Code, it can be found at http://www.staff.science.uu.nl/~gent0113/islam/ummalqura.htm
+  // read calendar data
 
-    var day = parseInt(pDay);
-    var month = parseInt(pMonth) - 1; // Here we enter the Index of the month (which starts with Zero)
-    var year = parseInt(pYear);
+  var day = parseInt(pDay);
+  var month = parseInt(pMonth) - 1; // Here we enter the Index of the month (which starts with Zero)
+  var year = parseInt(pYear);
 
-    var m = month + 1;
-    var y = year;
+  var m = month + 1;
+  var y = year;
 
-    // append January and February to the previous year (i.e. regard March as
-    // the first month of the year in order to simplify leapday corrections)
+  // append January and February to the previous year (i.e. regard March as
+  // the first month of the year in order to simplify leapday corrections)
 
-    if (m < 3) {
-      y -= 1;
-      m += 12;
-    }
+  if (m < 3) {
+    y -= 1;
+    m += 12;
+  }
 
-    // determine offset between Julian and Gregorian calendar
+  // determine offset between Julian and Gregorian calendar
 
-    var a = Math.floor(y / 100);
-    var jgc = a - Math.floor(a / 4) - 2;
+  var a = Math.floor(y / 100);
+  var jgc = a - Math.floor(a / 4) - 2;
 
-    // compute Chronological Julian Day Number (CJDN)
+  // compute Chronological Julian Day Number (CJDN)
 
-    var cjdn =
-      Math.floor(365.25 * (y + 4716)) +
-      Math.floor(30.6001 * (m + 1)) +
-      day -
-      jgc -
-      1524;
+  var cjdn =
+    Math.floor(365.25 * (y + 4716)) +
+    Math.floor(30.6001 * (m + 1)) +
+    day -
+    jgc -
+    1524;
 
-    a = Math.floor((cjdn - 1867216.25) / 36524.25);
-    jgc = a - Math.floor(a / 4) + 1;
-    var b = cjdn + jgc + 1524;
-    var c = Math.floor((b - 122.1) / 365.25);
-    var d = Math.floor(365.25 * c);
-    month = Math.floor((b - d) / 30.6001);
-    day = b - d - Math.floor(30.6001 * month);
+  a = Math.floor((cjdn - 1867216.25) / 36524.25);
+  jgc = a - Math.floor(a / 4) + 1;
+  var b = cjdn + jgc + 1524;
+  var c = Math.floor((b - 122.1) / 365.25);
+  var d = Math.floor(365.25 * c);
+  month = Math.floor((b - d) / 30.6001);
+  day = b - d - Math.floor(30.6001 * month);
 
-    if (month > 13) {
-      c += 1;
-      month -= 12;
-    }
+  if (month > 13) {
+    c += 1;
+    month -= 12;
+  }
 
-    month -= 1;
-    year = c - 4716;
+  month -= 1;
+  year = c - 4716;
 
-    // compute Modified Chronological Julian Day Number (MCJDN)
+  // compute Modified Chronological Julian Day Number (MCJDN)
 
-    var mcjdn = cjdn - 2400000;
+  var mcjdn = cjdn - 2400000;
 
-    // the MCJDN's of the start of the lunations in the Umm al-Qura calendar are stored in 'islamcalendar_dat.js'
+  // the MCJDN's of the start of the lunations in the Umm al-Qura calendar are stored in 'islamcalendar_dat.js'
 
-    for (var i = 0; i < ummalqura_dat.length; i++) {
-      if (ummalqura_dat[i] > mcjdn) { break; }
-    }
+  for (var i = 0; i < ummalqura_dat.length; i++) {
+    if (ummalqura_dat[i] > mcjdn) { break; }
+  }
 
-    // compute and output the Umm al-Qura calendar date
+  // compute and output the Umm al-Qura calendar date
 
-    var iln = i + 16260;
-    var ii = Math.floor((iln - 1) / 12);
-    var iy = ii + 1;
-    var im = iln - 12 * ii;
-    var id = mcjdn - ummalqura_dat[i - 1] + 1;
-    return new this.HijriDate(iy, im, id, splitter);
-  };
+  var iln = i + 16260;
+  var ii = Math.floor((iln - 1) / 12);
+  var iy = ii + 1;
+  var im = iln - 12 * ii;
+  var id = mcjdn - ummalqura_dat[i - 1] + 1;
+  return new this.hijriDate(iy, im, id, splitter, this.lang);
+};
 
-  anonymous.prototype.julianToGregorian = function julianToGregorian (julianDate, splitter) {
-    // source from: http://keith-wood.name/calendars.html
+HijriJs.prototype.julianToGregorian = function julianToGregorian (julianDate, splitter) {
+  // source from: http://keith-wood.name/calendars.html
 
-    var z = Math.floor(julianDate + 0.5);
-    var a = Math.floor((z - 1867216.25) / 36524.25);
-    a = z + 1 + a - Math.floor(a / 4);
-    var b = a + 1524;
-    var c = Math.floor((b - 122.1) / 365.25);
-    var d = Math.floor(365.25 * c);
-    var e = Math.floor((b - d) / 30.6001);
-    var day = b - d - Math.floor(e * 30.6001);
-    var month = e - (e > 13.5 ? 13 : 1);
-    var year = c - (month > 2.5 ? 4716 : 4715);
+  var z = Math.floor(julianDate + 0.5);
+  var a = Math.floor((z - 1867216.25) / 36524.25);
+  a = z + 1 + a - Math.floor(a / 4);
+  var b = a + 1524;
+  var c = Math.floor((b - 122.1) / 365.25);
+  var d = Math.floor(365.25 * c);
+  var e = Math.floor((b - d) / 30.6001);
+  var day = b - d - Math.floor(e * 30.6001);
+  var month = e - (e > 13.5 ? 13 : 1);
+  var year = c - (month > 2.5 ? 4716 : 4715);
 
-    if (year <= 0) {
-      year--;
-    } // No year zero
+  if (year <= 0) {
+    year--;
+  } // No year zero
 
-    return new Date(year + splitter + month + splitter + day);
-  };
+  return new Date(year + splitter + month + splitter + day);
+};
 
-  anonymous.prototype.HijriDate = function HijriDate (year, month, day, splitter) {
-    this.year = year;
-    this.month = month;
-    this.day = day;
-    this.splitter = splitter;
-    this.monthName = lang.monthNames[month];
-    this.monthShortName = lang.monthShortNames[month];
-    this.full = (day + ' - ' + this.monthName + '(' + month + ') - ' + year);
-    this.plain = (day + splitter + month + splitter + year);
-  };
+HijriJs.prototype.hijriDate = function hijriDate (year, month, day, splitter, lang) {
+  this.year = year;
+  this.month = month;
+  this.day = day;
+  this.splitter = splitter;
+  this.monthName = lang.monthNames[month];
+  this.monthShortName = lang.monthShortNames[month];
+  this.full = (day + ' - ' + this.monthName + '(' + month + ') - ' + year);
+  this.plain = (day + splitter + month + splitter + year);
+};
 
-  return anonymous;
-}());
-
-exports.LangFormat = LangFormat;
-exports['default'] = index;
+module.exports = HijriJs;

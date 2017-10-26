@@ -1,20 +1,13 @@
 import Ummalqura from './lib/ummalqura';
 import Lang from './lib/lang';
 
-const lang = new Lang();
 const ummalqura = new Ummalqura();
 const ummalqura_dat = ummalqura.ummalqura_dat;
-
-export class LangFormat {
-  constructor() {
-    this.prefix = 'en';
-  }
-}
 
 export default class HijriJs {
 
   constructor() {
-    this.lang = lang;
+    this.lang = new Lang();
   }
 
   getLang() {
@@ -22,7 +15,7 @@ export default class HijriJs {
   }
 
   setLang(value) {
-    this.lang = lang;
+    this.lang = value;
   }
 
   today() {
@@ -38,7 +31,7 @@ export default class HijriJs {
       const day = dateString.substring(0,2);
       arrDate = [day, month, year];
       splitter = '/';
-    }else{
+    } else {
     // default splitter
       arrDate = dateString.split(splitter);
     }
@@ -164,7 +157,7 @@ export default class HijriJs {
     var im = iln - 12 * ii;
     var id = mcjdn - ummalqura_dat[i - 1] + 1;
     var ml = ummalqura_dat[i] - ummalqura_dat[i - 1];
-    return new this.HijriDate(iy, im, id, splitter);
+    return new this.hijriDate(iy, im, id, splitter, this.lang);
   }
 
   julianToGregorian(julianDate, splitter) {
@@ -188,7 +181,7 @@ export default class HijriJs {
     return new Date(year + splitter + month + splitter + day);
   }
 
-  HijriDate(year, month, day, splitter) {
+  hijriDate(year, month, day, splitter, lang) {
     this.year = year;
     this.month = month;
     this.day = day;
