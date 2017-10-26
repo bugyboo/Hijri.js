@@ -5,6 +5,12 @@ const lang = new Lang();
 const ummalqura = new Ummalqura();
 const ummalqura_dat = ummalqura.ummalqura_dat;
 
+export class LangFormat {
+  constructor() {
+    this.prefix = 'en';
+  }
+}
+
 export default class HijriJs {
 
   constructor() {
@@ -187,7 +193,10 @@ export default class HijriJs {
     this.month = month;
     this.day = day;
     this.splitter = splitter;
-    this.full = (day + splitter + month + splitter + year);
+    this.monthName = lang.monthNames[month];
+    this.monthShortName = lang.monthShortNames[month];
+    this.full = (day + ' - ' + this.monthName + '(' + month + ') - ' + year);
+    this.plain = (day + splitter + month + splitter + year);
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "hijri-js",
-  "version": "1.0.8",
-  "description": "Node.js Wrapper lib for @xsoh Hijri.js utility ",
+  "version": "1.0.9",
+  "description": "Node.js Wrapper lib for @xsoh's Hijri.js utility ",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bugyboo/Hijri-js.git"

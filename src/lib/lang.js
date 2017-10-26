@@ -41,10 +41,4 @@ export default class Lang {
       'DhuH',
     ];
   }
-
-  formatLocale(hDate) {
-    // For English it will convert from currentLanguages numbers to Arabic numbers.
-
-    return hDate;
-  }
 }
