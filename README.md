@@ -30,12 +30,12 @@ $ npm install hijri-js --save
 To get Today in Hijri:
 ``` Node.js
 
-const xsoh = require('hijri-js')
+const hijri = require('hijri-js')
 
 run();
 
 function run() {
-    const x = new xsoh();
+    const x = hijri.intilizeHijriJs();
     
     console.log(' today ==> ', x.today().full )
     console.log(' 24-10-2017 ==> ', x.toHijri('24102017') );
@@ -56,6 +56,10 @@ $ cd hijri-js
 $ yarn install
 $ npm run build
 ```
+
+#### Examples
+
+Comming soon..! Node.Js express example on how to consume this libraray.
 
 
 

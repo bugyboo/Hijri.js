@@ -1,13 +1,13 @@
 /*!
- * hijri-js v1.0.12
+ * hijri-js v1.0.14
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.HijriJs = factory());
-}(this, (function () { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.HijriJs = {})));
+}(this, (function (exports) { 'use strict';
 
 var ummalqura_dat$1 = [28607,28636,28665,28695,28724,28754,28783,28813,28843,28872,28901,28931,28960,28990,29019,29049,29078,29108,29137,29167,
   29196,29226,29255,29285,29315,29345,29375,29404,29434,29463,29492,29522,29551,29580,29610,29640,29669,29699,29729,29759,
@@ -145,6 +145,10 @@ var Lang = function Lang() {
 
 var ummalqura = new Ummalqura();
 var ummalqura_dat = ummalqura.ummalqura_dat;
+
+function intilizeHijriJs() {
+  return new HijriJs();
+}
 
 var HijriJs = function HijriJs() {
   this.lang = new Lang();
@@ -325,14 +329,17 @@ HijriJs.prototype.hijriDate = function hijriDate (year, month, day, splitter, la
   this.month = month;
   this.day = day;
   this.splitter = splitter;
-  this.monthName = lang.monthNames[month];
-  this.monthShortName = lang.monthShortNames[month];
+  this.monthName = lang.monthNames[month-1];
+  this.monthShortName = lang.monthShortNames[month-1];
   this.full = (day + ' - ' + this.monthName 
               + '(' + month + ') - ' 
               + year + ' ' + lang.notation);
   this.plain = (day + splitter + month + splitter + year);
 };
 
-return HijriJs;
+exports.intilizeHijriJs = intilizeHijriJs;
+exports.HijriJs = HijriJs;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));

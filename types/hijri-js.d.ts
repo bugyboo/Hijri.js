@@ -1,8 +1,8 @@
 declare module "hijri-js" {
 
-    function HijriJs(): HijriJs.HijriJs;
-
     namespace HijriJs {
+
+        function intilizeHijriJs(): HijriJs;
     
         interface Lang {
             prefix: string;
@@ -82,26 +82,6 @@ declare module "hijri-js" {
              */
             gregorianToHijri(pYear: string, pMonth: string, pDay: string, splitter: string): HijriDate;
                 
-        }
-
-
-        class HijriClass implements HijriJs {
-            
-            getLang(): Lang;
-
-            setLang(value: Lang): void;
-            
-            today(): HijriDate;
-        
-            toGregorian(dateString: string, splitter: string): Date;
-        
-            toHijri(dateString: string, splitter: string): HijriDate;
-        
-            hijriToGregorian(year: string, month: string, day: string, splitter: string): Date;
-        
-            gregorianToHijri(pYear: string, pMonth: string, pDay: string, splitter: string): HijriDate;
-            
-            constructor();
         }  
     
     }

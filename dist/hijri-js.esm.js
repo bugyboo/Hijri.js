@@ -1,5 +1,5 @@
 /*!
- * hijri-js v1.0.12
+ * hijri-js v1.0.14
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
@@ -139,6 +139,10 @@ var Lang = function Lang() {
 
 var ummalqura = new Ummalqura();
 var ummalqura_dat = ummalqura.ummalqura_dat;
+
+function intilizeHijriJs() {
+  return new HijriJs();
+}
 
 var HijriJs = function HijriJs() {
   this.lang = new Lang();
@@ -319,12 +323,12 @@ HijriJs.prototype.hijriDate = function hijriDate (year, month, day, splitter, la
   this.month = month;
   this.day = day;
   this.splitter = splitter;
-  this.monthName = lang.monthNames[month];
-  this.monthShortName = lang.monthShortNames[month];
+  this.monthName = lang.monthNames[month-1];
+  this.monthShortName = lang.monthShortNames[month-1];
   this.full = (day + ' - ' + this.monthName 
               + '(' + month + ') - ' 
               + year + ' ' + lang.notation);
   this.plain = (day + splitter + month + splitter + year);
 };
 
-export default HijriJs;
+export { intilizeHijriJs, HijriJs };

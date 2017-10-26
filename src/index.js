@@ -4,7 +4,11 @@ import Lang from './lib/lang';
 const ummalqura = new Ummalqura();
 const ummalqura_dat = ummalqura.ummalqura_dat;
 
-export default class HijriJs {
+export function intilizeHijriJs() {
+  return new HijriJs();
+}
+
+export class HijriJs {
 
   constructor() {
     this.lang = new Lang();
@@ -186,8 +190,8 @@ export default class HijriJs {
     this.month = month;
     this.day = day;
     this.splitter = splitter;
-    this.monthName = lang.monthNames[month];
-    this.monthShortName = lang.monthShortNames[month];
+    this.monthName = lang.monthNames[month-1];
+    this.monthShortName = lang.monthShortNames[month-1];
     this.full = (day + ' - ' + this.monthName 
                 + '(' + month + ') - ' 
                 + year + ' ' + lang.notation);
