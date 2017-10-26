@@ -11,6 +11,14 @@ export default class HijriJs {
     this.lang = lang;
   }
 
+  getLang() {
+    return this.lang;
+  }
+
+  setLang(value) {
+    this.lang = lang;
+  }
+
   today() {
     var today = new Date();
 		return this.gregorianToHijri(today.getFullYear(), (today.getMonth()+1), today.getDate(), '/');

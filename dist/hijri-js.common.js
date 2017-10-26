@@ -1,5 +1,5 @@
 /*!
- * hijri-js v1.0.7
+ * hijri-js v1.0.8
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
@@ -150,6 +150,14 @@ var ummalqura = new Ummalqura();
 var ummalqura_dat = ummalqura.ummalqura_dat;
 
 var HijriJs = function HijriJs() {
+  this.lang = lang;
+};
+
+HijriJs.prototype.getLang = function getLang () {
+  return this.lang;
+};
+
+HijriJs.prototype.setLang = function setLang (value) {
   this.lang = lang;
 };
 
