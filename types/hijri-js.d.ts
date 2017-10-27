@@ -2,7 +2,7 @@ declare module "hijri-js" {
 
     namespace HijriJs {
 
-        function intilizeHijriJs(): HijriJs;
+        function initialize(): HijriJs;
     
         interface Lang {
             prefix: string;

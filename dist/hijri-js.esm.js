@@ -1,5 +1,5 @@
 /*!
- * hijri-js v1.0.20
+ * hijri-js v1.0.21
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
