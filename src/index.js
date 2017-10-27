@@ -4,7 +4,7 @@ import Lang from './lib/lang';
 const ummalqura = new Ummalqura();
 const ummalqura_dat = ummalqura.ummalqura_dat;
 
-export function intilizeHijriJs() {
+export function initialize() {
   return new HijriJs();
 }
 

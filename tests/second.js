@@ -3,7 +3,7 @@ const h = require('../dist/hijri-js')
 run();
 
 function run() {
-    const x = h.intilizeHijriJs();
+    const x = h.initialize();
 
     console.log(' Testing today ==> ', x.today() );
     console.log(' Testing 24-10-2017 ==> ', x.toHijri('24102017') );

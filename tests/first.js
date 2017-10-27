@@ -3,7 +3,7 @@ const h = require('../dist/hijri-js')
 run();
 
 function run() {
-    const x = h.intilizeHijriJs();
+    const x = h.initialize();
 
     const lang = x.getLang();
     console.log(' Testing properties Lang => ', lang);

@@ -1,6 +1,6 @@
 {
   "name": "hijri-js",
-  "version": "1.0.15",
+  "version": "1.0.20",
   "description": "Node.js Wrapper lib for @xsoh's Hijri.js utility ",
   "repository": {
     "type": "git",
@@ -14,18 +14,16 @@
   ],
   "author": "bugyboo <yasser@nervelife.com> (http://nervelife.com)",
   "bugs": {
-    "url": "https://github.com/xsoh/Hijri.js/issues"
+    "url": "https://github.com/bugyboo/hijri-js/issues"
   },
-  "homepage": "https://github.com/xsoh/Hijri.js#readme",
+  "homepage": "https://github.com/bugyboo/hijri-js#readme",
   "main": "dist/hijri-js.common.js",
   "module": "dist/hijri-js.esm.js",
   "typings": "types/hijri-js.d.ts",
-  "files": [
-    "css",
-    "dist",
-    "src",
-    "types"
-  ],
+  "directories":{
+    "dist": "dist",
+    "types": "types"
+  },
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
     "prettier": "^1.7.0",
