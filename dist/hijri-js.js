@@ -1,5 +1,5 @@
 /*!
- * hijri-js v1.0.22
+ * hijri-js v1.0.23
  * (c) 2017 Yasser Harbi
  * @license MIT
  */
@@ -180,7 +180,7 @@ HijriJs.prototype.toGregorian = function toGregorian (dateString, splitter) {
     arrDate = dateString.split(splitter);
   }
   if (arrDate.length < 3) {
-    throw new 'Error in input values';
+    return null;
   }
   return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0], splitter);
 }; 
@@ -195,7 +195,7 @@ HijriJs.prototype.hijriToGregorian = function hijriToGregorian (year, month, day
   var day = parseInt(day);
   
   if (year === 'NaN' || month === 'NaN' || day === 'NaN') {
-     throw new 'Error in input values';
+     return null;
   }
   
   var iy = year;
@@ -224,7 +224,7 @@ HijriJs.prototype.toHijri = function toHijri (dateString, splitter) {
   }
 
   if (arrDate.length < 3) {
-    throw new 'Error in input values';
+    return null;
   }
   return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0], splitter);
 
@@ -321,7 +321,7 @@ HijriJs.prototype.julianToGregorian = function julianToGregorian (julianDate, sp
     year--;
   } // No year zero
 
-  return new Date(year + splitter + (month+1) + splitter + day);
+  return new Date(year + splitter + month + splitter + day);
 };
 
 HijriJs.prototype.hijriDate = function hijriDate (year, month, day, splitter, lang) {

@@ -1,6 +1,6 @@
 {
   "name": "hijri-js",
-  "version": "1.0.22",
+  "version": "1.0.25",
   "description": "Node.js Wrapper lib for @xsoh's Hijri.js utility ",
   "repository": {
     "type": "git",

@@ -40,7 +40,7 @@ export class HijriJs {
       arrDate = dateString.split(splitter);
     }
     if (arrDate.length < 3) {
-      throw new 'Error in input values';
+      return null;
     }
     return this.hijriToGregorian(arrDate[2], arrDate[1], arrDate[0], splitter);
   } 
@@ -55,7 +55,7 @@ export class HijriJs {
     var day = parseInt(day);
   
     if (year === 'NaN' || month === 'NaN' || day === 'NaN') {
-       throw new 'Error in input values';
+       return null;
     }
   
     var iy = year;
@@ -84,7 +84,7 @@ export class HijriJs {
     }
 
     if (arrDate.length < 3) {
-      throw new 'Error in input values';
+      return null;
     }
     return this.gregorianToHijri(arrDate[2], arrDate[1], arrDate[0], splitter);
 
@@ -182,7 +182,7 @@ export class HijriJs {
       year--;
     } // No year zero
 
-    return new Date(year + splitter + (month+1) + splitter + day);
+    return new Date(year + splitter + month + splitter + day);
   }
 
   hijriDate(year, month, day, splitter, lang) {
