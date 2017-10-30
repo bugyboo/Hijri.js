@@ -182,7 +182,7 @@ export class HijriJs {
       year--;
     } // No year zero
 
-    return new Date(year + splitter + month + splitter + day);
+    return new Date(year + splitter + (month+1) + splitter + day);
   }
 
   hijriDate(year, month, day, splitter, lang) {
@@ -192,8 +192,8 @@ export class HijriJs {
     this.splitter = splitter;
     this.monthName = lang.monthNames[month-1];
     this.monthShortName = lang.monthShortNames[month-1];
-    this.full = (day + ' - ' + this.monthName 
-                + '(' + month + ') - ' 
+    this.full = (day + ' ' + this.monthName 
+                + '(' + month + ') ' 
                 + year + ' ' + lang.notation);
     this.plain = (day + splitter + month + splitter + year);
   }
