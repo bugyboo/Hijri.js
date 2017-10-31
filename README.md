@@ -1,7 +1,8 @@
 # hijri-js
 
-[![npm](https://img.shields.io/badge/npm-3.10.10-blue.svg)](https://www.npmjs.com/package/hijri-js)
+[![npm](https://img.shields.io/badge/npm-1.0.25-blue.svg)](https://www.npmjs.com/package/hijri-js)
 [![TypeScript](https://img.shields.io/badge/TypeScript-2.5.3-blue.svg)](https://www.typescriptlang.org)
+[![build](https://img.shields.io/badge/build-success-green.svg)](https://www.typescriptlang.org)
 
 
 [xsoh's Hijri.js](https://github.com/xsoh) for Nodejs
